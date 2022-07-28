@@ -1,8 +1,6 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-console.log(galleryItems);
-
 const allGallery = document.querySelector(`.gallery`);
 
 const galleryMarkUp = galleryItems
@@ -33,9 +31,38 @@ function onPictureClick(event) {
     return;
   }
 //   получить ссылку на датасорс картинки 
-  const instance = basicLightbox.create(`
-     <img src="${event.target.dataset.source}" width="1280">
-`);
 
-  instance.show();
+//   const instance = basicLightbox.create(`
+//      <img src="${event.target.dataset.source}" width="1280">
+// `);
+
+//   instance.show();
+onModalShow (event);
 }
+
+function onModalShow (event){
+
+    window.addEventListener(`keydown`, onEscKeyPress);
+
+    const instance = basicLightbox.create(`
+    <img src="${event.target.dataset.source}" width="1280">
+`, {onClose: (instance) => {
+    window.removeEventListener(`keydown`, onEscKeyPress);
+
+}
+
+});
+
+ instance.show();
+
+ function onEscKeyPress(event){
+    if (event.code ===`Escape`){
+    
+        instance.close();
+    }
+ 
+}
+
+}
+
+
